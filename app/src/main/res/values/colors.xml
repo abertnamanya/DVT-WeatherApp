@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">@color/cloudy</color>
+    <color name="purple_500">@color/cloudy</color>
+    <color name="purple_700">@color/cloudy</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="sunny">#47AB2F</color>
+    <color name="cloudy">#54717A</color>
+    <color name="rainy">#57575D</color>
+
+    <color name="cloudy_body_bg">#628594</color>
+    <color name="rainy_body_bg">#57575D</color>
+    <color name="sunny_body_bg">#4990E2</color>
+    <color name="percentage_text_color">#ffffff</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+
+
+</resources>

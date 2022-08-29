@@ -12,12 +12,13 @@
         <entry key="app/src/main/res/layout/activity_favourity_locations.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19972826086956522" />
         <entry key="app/src/main/res/layout/activity_search_places.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_weather_forecast.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_weather_forecast.xml" value="0.15613382899628253" />
         <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.21" />
         <entry key="app/src/main/res/layout/content_favourite_locations.xml" value="0.22" />
         <entry key="app/src/main/res/layout/content_weather_forecast.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_welcome.xml" value="0.10833333333333334" />
         <entry key="app/src/main/res/layout/current_weather_layout_bg.xml" value="0.10116044399596368" />
+        <entry key="app/src/main/res/layout/custom_weather_conditions.xml" value="0.22" />
         <entry key="app/src/main/res/layout/favourite_places_view.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.10923309788092836" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.10923309788092836" />

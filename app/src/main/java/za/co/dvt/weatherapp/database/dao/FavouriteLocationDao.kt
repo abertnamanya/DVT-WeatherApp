@@ -17,6 +17,9 @@ interface FavouriteLocationDao {
     @Query("SELECT * FROM FavouriteLocation where uuid=:uuid")
     fun getFavouriteLocationByUuid(uuid: Int): FavouriteLocation
 
+    @Query("UPDATE FavouriteLocation SET name=:name WHERE uuid = :uuid")
+    fun updateFavouriteLocationInfo(name: String, uuid: Int)
+
     @Delete
     fun deleteFavouriteLocation(favouriteLocation: FavouriteLocation)
 }

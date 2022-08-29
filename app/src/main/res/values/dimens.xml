@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="current_weather_text">18sp</dimen>
+    <dimen name="weather_predictions_text">20sp</dimen>
 </resources>

@@ -1,4 +1,4 @@
-package za.co.dvt.weatherapp.data
+package za.co.dvt.weatherapp.api
 
 data class WeeklyWeatherDataResponse(
     val list: ArrayList<list>,

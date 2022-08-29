@@ -1,6 +1,7 @@
 package za.co.dvt.weatherapp.activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +22,8 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.database.entity.FavouriteLocation
-import za.co.dvt.weatherapp.viewModel.FavouriteLocationViewModel
+import za.co.dvt.weatherapp.ui.viewModel.FavouriteLocationViewModel
+import za.co.dvt.weatherapp.utils.ToastNotification
 import java.util.*
 
 class SearchPlacesActivity : AppCompatActivity(), OnMapReadyCallback,
@@ -125,12 +127,11 @@ class SearchPlacesActivity : AppCompatActivity(), OnMapReadyCallback,
                         selectedLocationInfo.longitude
                     )
                 )
+                ToastNotification(this).showToastNotification("${selectedLocationInfo.place} has been added to the Favourites")
+                val intent = Intent(this, FavouriteLocationsActivity::class.java)
+                startActivity(intent)
             } else {
-                Toast.makeText(
-                    this,
-                    "Place has not been added to the Favourites",
-                    Toast.LENGTH_LONG
-                ).show()
+                ToastNotification(this).showToastNotification("Place has not been added to the Favourites")
             }
             dialog.dismiss()
         }

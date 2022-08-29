@@ -6,17 +6,22 @@ import za.co.dvt.weatherapp.database.entity.WeatherPrediction
 
 class WeatherPredictionRepository(private val weatherPredictionDao: WeatherPredictionDao) {
     val weatherPredictions: LiveData<List<WeatherPrediction>> =
-        weatherPredictionDao.getWeatherPredictions()
+        weatherPredictionDao.getAllWeatherPredictions()
+
+    fun favouriteLocationWeatherPredictions(favouriteLocationId: Int): LiveData<List<WeatherPrediction>> =
+        weatherPredictionDao.getWeatherPredictionsByFavouriteLocation(favouriteLocationId)
 
     suspend fun saveWeatherPrediction(weatherPrediction: WeatherPrediction) {
         weatherPredictionDao.saveWeatherPrediction(weatherPrediction)
     }
 
-    fun getWeatherPredictionById(id: Int) {
-        weatherPredictionDao.getWeatherPredictionById(id)
-    }
+    fun getWeatherPredictionsByDate(date: String): WeatherPrediction =
+        weatherPredictionDao.getWeatherPredictionsByDate(date)
 
-    fun deleteWeatherPrediction(weatherPrediction: WeatherPrediction) {
-        weatherPredictionDao.deleteWeatherPrediction(weatherPrediction)
+    fun getWeatherPredictionById(id: Int): WeatherPrediction =
+        weatherPredictionDao.getWeatherPredictionById(id)
+
+    fun deleteWeatherPrediction(favouriteLocationId: Int) {
+        weatherPredictionDao.deleteWeatherPrediction(favouriteLocationId)
     }
 }

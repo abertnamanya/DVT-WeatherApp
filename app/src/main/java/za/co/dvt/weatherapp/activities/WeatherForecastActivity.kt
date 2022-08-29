@@ -8,21 +8,30 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.gson.JsonArray
 import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.api.*
-import za.co.dvt.weatherapp.data.WeeklyWeatherDataResponse
+import za.co.dvt.weatherapp.api.WeeklyWeatherDataResponse
+import za.co.dvt.weatherapp.api.repository.WeatherApiRepository
 import za.co.dvt.weatherapp.utils.Constants
+import za.co.dvt.weatherapp.api.viewModel.WeatherApiViewModel
+import za.co.dvt.weatherapp.api.viewModel.WeatherApiViewModelFactory
+import za.co.dvt.weatherapp.ui.adapter.WeatherAdapter
+import za.co.dvt.weatherapp.ui.viewModel.WeatherViewModel
 
 class WeatherForecastActivity : AppCompatActivity() {
     private var locationUtil: LocationUtil? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var viewModel: WeatherViewModel
+    private lateinit var viewModel: WeatherApiViewModel
     private val retrofitService = RetrofitService.forecastApi
+    private lateinit var adapter: WeatherAdapter
+    private lateinit var weatherViewModel: WeatherViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_forecast)
@@ -33,8 +42,8 @@ class WeatherForecastActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(
                 this,
-                WeatherViewModelFactory(WeatherRepository(retrofitService), this)
-            )[WeatherViewModel::class.java]
+                WeatherApiViewModelFactory(WeatherApiRepository(retrofitService), this)
+            )[WeatherApiViewModel::class.java]
 
         viewModel.getWeeklyWeatherInformation(
             locationUtil!!.useStoredLocationData().latitude,
@@ -46,13 +55,28 @@ class WeatherForecastActivity : AppCompatActivity() {
             populateMenuOptions()
         }
         observeUI()
+        adapter = WeatherAdapter(this)
+        val weeklyForecastRecycleView =
+            findViewById<RecyclerView>(R.id.weekly_forecast_recycleView)
+        weeklyForecastRecycleView.adapter = adapter
+
+        weatherViewModel =
+            ViewModelProvider(this)[WeatherViewModel::class.java]
+
+        weeklyForecastRecycleView.layoutManager = LinearLayoutManager(this)
+        weatherViewModel.locationWeatherPredictions.observe(this, Observer { prediction ->
+            adapter.updateLiveData(prediction)
+        })
+
+
     }
+
 
     private fun observeUI() {
         viewModel.weatherInfo.observe(this) {
             when (it) {
                 is Resource.Success<*> -> {
-                    val data: WeeklyWeatherDataResponse? =it.data
+                    val data: WeeklyWeatherDataResponse? = it.data
 //                    Log.d("DataFrom", it.data.)
                 }
                 is Resource.Error -> {

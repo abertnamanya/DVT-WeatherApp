@@ -1,15 +1,26 @@
 package za.co.dvt.weatherapp.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import za.co.dvt.weatherapp.database.dao.FavouriteLocationDao
+import za.co.dvt.weatherapp.database.dao.WeatherPredictionDao
 import za.co.dvt.weatherapp.database.entity.FavouriteLocation
+import za.co.dvt.weatherapp.database.entity.WeatherPrediction
 
-@Database(entities = [FavouriteLocation::class], version = 1, exportSchema = false)
+@Database(
+    entities = [FavouriteLocation::class, WeatherPrediction::class],
+    version = 1,
+    autoMigrations = [
+//        AutoMigration (from = 1, to = 2)
+    ],
+    exportSchema = true
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun FavouriteLocationDao(): FavouriteLocationDao
+    abstract fun WeatherPredictionDao(): WeatherPredictionDao
 
     companion object {
         @Volatile
@@ -21,7 +32,8 @@ abstract class AppDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java, "dvt_weather_app_db"
-                    ).build()
+                    ).allowMainThreadQueries()
+                        .build()
                 }
             }
             return INSTANCE

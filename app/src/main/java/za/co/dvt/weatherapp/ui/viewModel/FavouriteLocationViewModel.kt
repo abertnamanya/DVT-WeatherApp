@@ -1,4 +1,4 @@
-package za.co.dvt.weatherapp.viewModel
+package za.co.dvt.weatherapp.ui.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

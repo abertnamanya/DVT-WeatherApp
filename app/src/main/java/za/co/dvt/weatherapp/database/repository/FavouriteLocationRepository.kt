@@ -17,4 +17,8 @@ class FavouriteLocationRepository(private val favouriteLocationDao: FavouriteLoc
         favouriteLocationDao.getFavouriteLocationByUuid(uuid)
     }
 
+    fun updateFavouriteLocationInfo(name: String, uuid: Int){
+        favouriteLocationDao.updateFavouriteLocationInfo(name, uuid)
+    }
+
 }

@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.databinding.ActivityFavouriteLocationsBinding
-import za.co.dvt.weatherapp.adapter.FavouriteLocationAdapter
-import za.co.dvt.weatherapp.viewModel.FavouriteLocationViewModel
+import za.co.dvt.weatherapp.ui.adapter.FavouriteLocationAdapter
+import za.co.dvt.weatherapp.ui.viewModel.FavouriteLocationViewModel
 
 class FavouriteLocationsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavouriteLocationsBinding
@@ -31,7 +31,7 @@ class FavouriteLocationsActivity : AppCompatActivity() {
             ViewModelProvider(this)[FavouriteLocationViewModel::class.java]
 
 
-        adapter = FavouriteLocationAdapter()
+        adapter = FavouriteLocationAdapter(this)
 
         val placesRecycleView =
             findViewById<RecyclerView>(R.id.favourite_places_recycleView)

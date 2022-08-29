@@ -15,7 +15,7 @@ interface FavouriteLocationDao {
     fun getFavouriteLocations(): LiveData<List<FavouriteLocation>>
 
     @Query("SELECT * FROM FavouriteLocation where uuid=:uuid")
-    fun getFavouriteLocationByUuid(uuid: Int)
+    fun getFavouriteLocationByUuid(uuid: Int): FavouriteLocation
 
     @Delete
     fun deleteFavouriteLocation(favouriteLocation: FavouriteLocation)

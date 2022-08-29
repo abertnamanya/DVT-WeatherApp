@@ -1,4 +1,4 @@
-package za.co.dvt.weatherapp.utils
+package za.co.dvt.weatherapp.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

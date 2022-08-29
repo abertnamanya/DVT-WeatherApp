@@ -11,7 +11,6 @@ import com.google.android.gms.location.LocationServices
 import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.utils.GeneralPrefs
-import za.co.dvt.weatherapp.weatherCall.WeatherRequestCall
 
 class WelcomeActivity : AppCompatActivity() {
     lateinit var locationUtil: LocationUtil
@@ -35,14 +34,14 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun getCurrentWeatherData() {
-        val latitude = locationUtil.useStoredLocationData().latitude
-        val longitude = locationUtil.useStoredLocationData().longitude
-        if (latitude != null && longitude != null) {
-            val call = WeatherRequestCall().dailyWeatherForeCast(latitude, longitude)
-            if (call!!.isSuccessful || call.code() == 200) {
-
-            }
-        }
+//        val latitude = locationUtil.useStoredLocationData().latitude
+//        val longitude = locationUtil.useStoredLocationData().longitude
+//        if (latitude != null && longitude != null) {
+//            val call = WeatherRequestCall().dailyWeatherForeCast(latitude, longitude)
+//            if (call!!.isSuccessful || call.code() == 200) {
+//
+//            }
+//        }
 
     }
 

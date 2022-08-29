@@ -28,7 +28,7 @@ class FavouriteLocationsActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
         }
         favouriteLocationViewModel =
-            ViewModelProvider(this).get(FavouriteLocationViewModel::class.java)
+            ViewModelProvider(this)[FavouriteLocationViewModel::class.java]
 
 
         adapter = FavouriteLocationAdapter()

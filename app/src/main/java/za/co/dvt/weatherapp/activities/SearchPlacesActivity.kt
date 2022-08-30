@@ -23,6 +23,7 @@ import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.database.entity.FavouriteLocation
 import za.co.dvt.weatherapp.ui.viewModel.FavouriteLocationViewModel
+import za.co.dvt.weatherapp.utils.CurrentFavouriteLocation
 import za.co.dvt.weatherapp.utils.ToastNotification
 import java.util.*
 
@@ -41,7 +42,7 @@ class SearchPlacesActivity : AppCompatActivity(), OnMapReadyCallback,
             setDisplayShowHomeEnabled(true)
         }
         favouriteLocationViewModel =
-            ViewModelProvider(this).get(FavouriteLocationViewModel::class.java)
+            ViewModelProvider(this)[FavouriteLocationViewModel::class.java]
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -119,13 +120,11 @@ class SearchPlacesActivity : AppCompatActivity(), OnMapReadyCallback,
         builder.setMessage("Do you want to save ${selectedLocationInfo.place}")
         builder.setPositiveButton(R.string.OKAY) { dialog, _ ->
             if (selectedLocationInfo.latitude != null && selectedLocationInfo != null && selectedLocationInfo.place != null) {
-                favouriteLocationViewModel.saveFavouriteLocation(
-                    FavouriteLocation(
-                        0,
-                        selectedLocationInfo.place,
-                        selectedLocationInfo.latitude,
-                        selectedLocationInfo.longitude
-                    )
+                CurrentFavouriteLocation(this).addLocationToFavourites(
+                    favouriteLocationViewModel,
+                    selectedLocationInfo.place,
+                    selectedLocationInfo.latitude,
+                    selectedLocationInfo.longitude,
                 )
                 ToastNotification(this).showToastNotification("${selectedLocationInfo.place} has been added to the Favourites")
                 val intent = Intent(this, FavouriteLocationsActivity::class.java)

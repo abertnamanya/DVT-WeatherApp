@@ -13,6 +13,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     val locationWeatherPredictions: LiveData<List<WeatherPrediction>>
     private val repository: WeatherPredictionRepository
     private var selectedLocationPref: GeneralPrefs
+    val currentWeatherPredictions:  LiveData<WeatherPrediction>
 
     init {
         val weatherPredictionDao = AppDatabase.getInstance(application)?.WeatherPredictionDao()
@@ -20,5 +21,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         selectedLocationPref = GeneralPrefs(application)
         locationWeatherPredictions =
             repository.favouriteLocationWeatherPredictions(selectedLocationPref.getActiveWeatherLocation().uuid)
+        currentWeatherPredictions =
+            repository.getCurrentWeatherPredictionsByFavouriteLocation(selectedLocationPref.getActiveWeatherLocation().uuid)
     }
 }

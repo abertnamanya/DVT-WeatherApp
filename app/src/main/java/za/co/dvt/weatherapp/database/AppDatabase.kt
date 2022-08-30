@@ -1,10 +1,7 @@
 package za.co.dvt.weatherapp.database
 
 import android.content.Context
-import androidx.room.AutoMigration
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import za.co.dvt.weatherapp.database.dao.FavouriteLocationDao
 import za.co.dvt.weatherapp.database.dao.WeatherPredictionDao
 import za.co.dvt.weatherapp.database.entity.FavouriteLocation

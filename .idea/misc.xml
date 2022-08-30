@@ -9,10 +9,11 @@
         <entry key="app/src/main/res/drawable/search_location_layout.xml" value="0.12" />
         <entry key="app/src/main/res/drawable/start_button_bg.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_favourite_locations.xml" value="0.10923309788092836" />
+        <entry key="app/src/main/res/layout/activity_favourite_locations_map.xml" value="0.10191725529767912" />
         <entry key="app/src/main/res/layout/activity_favourity_locations.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19972826086956522" />
         <entry key="app/src/main/res/layout/activity_search_places.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_weather_forecast.xml" value="0.15613382899628253" />
+        <entry key="app/src/main/res/layout/activity_weather_forecast.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.21" />
         <entry key="app/src/main/res/layout/content_favourite_locations.xml" value="0.22" />
         <entry key="app/src/main/res/layout/content_weather_forecast.xml" value="0.25" />

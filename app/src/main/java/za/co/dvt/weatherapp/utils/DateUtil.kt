@@ -1,11 +1,12 @@
 package za.co.dvt.weatherapp.utils
 
+import java.sql.Date.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-fun convertDateTimeToDate(dateToFormat:String): String {
+fun convertDateTimeToDate(dateToFormat: String): String {
     var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     var date = LocalDate.parse(dateToFormat, formatter)
     return date.toString()
@@ -13,7 +14,7 @@ fun convertDateTimeToDate(dateToFormat:String): String {
 
 fun dayOfTheWeek(dateToFormat: String): String {
     val dateFormat = SimpleDateFormat(
-        "yyyy-MM-dd HH:mm:ss", Locale.ENGLISH
+        "yyyy-MM-dd", Locale.ENGLISH
     )
     val date = dateFormat.parse(dateToFormat)
     val calendar = Calendar.getInstance()

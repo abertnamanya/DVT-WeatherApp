@@ -82,11 +82,11 @@
         app:srcCompat="@drawable/ic_location" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/place_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="Kaburegwa"
+        android:text="current Location"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/start_btn"
         app:layout_constraintEnd_toEndOf="parent"

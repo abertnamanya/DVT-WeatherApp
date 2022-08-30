@@ -8,8 +8,10 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.provider.Settings
 import android.location.LocationManager
+import android.os.Looper
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.*
 
 class LocationUtil(private val context: Context) {
 
@@ -63,10 +65,9 @@ class LocationUtil(private val context: Context) {
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         if (location == null) {
+                            refreshLocationRequest()
                         } else {
-                            LocationSharedPref(context).removePreviousLocationData()
-                            val locationData = LocationData(location.latitude.toString(), location.longitude.toString())
-                            LocationSharedPref(context).storeCurrentLocation(locationData)
+                            handleLocationSharedPref(location)
                         }
                     }
             } else {
@@ -78,8 +79,52 @@ class LocationUtil(private val context: Context) {
         }
     }
 
+    private fun refreshLocationRequest() {
+        var locationRequest =
+            LocationRequest.create().apply {
+                interval = 100
+                fastestInterval = 50
+                priority = Priority.PRIORITY_HIGH_ACCURACY
+                maxWaitTime = 100
+            }
+        val fusedLocationClient: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(context)
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermission()
+        }
+        fusedLocationClient!!.requestLocationUpdates(
+            locationRequest, locationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            var lastKnownLocation: Location? = locationResult.lastLocation
+            if (lastKnownLocation != null) {
+                handleLocationSharedPref(lastKnownLocation)
+            }
+        }
+    }
+
     fun useStoredLocationData(): LocationData {
         return LocationSharedPref(context).getStoredLocationData()
+    }
+
+    private fun handleLocationSharedPref(location: Location) {
+        LocationSharedPref(context).removePreviousLocationData()
+        val locationData = LocationData(
+            location.latitude.toString(),
+            location.longitude.toString()
+        )
+        LocationSharedPref(context).storeCurrentLocation(locationData)
     }
 }
 

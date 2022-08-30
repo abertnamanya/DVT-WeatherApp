@@ -14,6 +14,7 @@ import za.co.dvt.weatherapp.utils.dayOfTheWeek
 class WeatherAdapter(context: Context) : RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
     private var weatherPrediction = emptyList<WeatherPrediction>()
 
+    val context = context
 
     class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dayOfTheWeek: TextView = itemView.findViewById(R.id.dayOfTheWeek)
@@ -32,7 +33,12 @@ class WeatherAdapter(context: Context) : RecyclerView.Adapter<WeatherAdapter.Wea
         val item = weatherPrediction[position]
         val convertToDayOfTheWeek = dayOfTheWeek(item.weather_date)
         holder.dayOfTheWeek.text = convertToDayOfTheWeek
-        holder.temperatureReadings.text = item.temp.toString()
+        holder.temperatureReadings.text = item.temp.toString().plus('\u00B0')
+        when (item.weather) {
+            "Rain" -> holder.weatherIcon.setImageResource(R.drawable.rain3x)
+            "Clear" -> holder.weatherIcon.setImageResource(R.drawable.clear3x)
+            "Clouds" -> holder.weatherIcon.setImageResource(R.drawable.partlysunny3x)
+        }
     }
 
     override fun getItemCount(): Int {

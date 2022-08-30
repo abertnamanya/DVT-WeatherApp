@@ -9,7 +9,7 @@ import za.co.dvt.weatherapp.database.entity.FavouriteLocation
 interface FavouriteLocationDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveFavouriteLocation(favouriteLocation: FavouriteLocation)
+    suspend fun saveFavouriteLocation(favouriteLocation: FavouriteLocation):Long
 
     @Query("SELECT * FROM FavouriteLocation ORDER BY uuid DESC")
     fun getFavouriteLocations(): LiveData<List<FavouriteLocation>>

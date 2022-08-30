@@ -6,8 +6,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +19,14 @@ import com.google.android.gms.location.LocationServices
 import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.api.*
-import za.co.dvt.weatherapp.api.WeeklyWeatherDataResponse
 import za.co.dvt.weatherapp.api.repository.WeatherApiRepository
 import za.co.dvt.weatherapp.utils.Constants
 import za.co.dvt.weatherapp.api.viewModel.WeatherApiViewModel
 import za.co.dvt.weatherapp.api.viewModel.WeatherApiViewModelFactory
+import za.co.dvt.weatherapp.database.entity.WeatherPrediction
 import za.co.dvt.weatherapp.ui.adapter.WeatherAdapter
 import za.co.dvt.weatherapp.ui.viewModel.WeatherViewModel
+import za.co.dvt.weatherapp.utils.GeneralPrefs
 
 class WeatherForecastActivity : AppCompatActivity() {
     private var locationUtil: LocationUtil? = null
@@ -46,15 +49,13 @@ class WeatherForecastActivity : AppCompatActivity() {
             )[WeatherApiViewModel::class.java]
 
         viewModel.getWeeklyWeatherInformation(
-            locationUtil!!.useStoredLocationData().latitude,
-            locationUtil!!.useStoredLocationData().longitude,
+            false,
             Constants.weatherTempUnits,
             Constants.openWeatherApiKey
         )
         navIcon.setOnClickListener {
             populateMenuOptions()
         }
-        observeUI()
         adapter = WeatherAdapter(this)
         val weeklyForecastRecycleView =
             findViewById<RecyclerView>(R.id.weekly_forecast_recycleView)
@@ -68,25 +69,67 @@ class WeatherForecastActivity : AppCompatActivity() {
             adapter.updateLiveData(prediction)
         })
 
-
+        updateUIComponents()
     }
 
+    private fun updateUIComponents() {
+        val weatherDegrees = findViewById<TextView>(R.id.weather_degrees)
+        val conditions = findViewById<TextView>(R.id.conditions)
+        val minimumTemp = findViewById<TextView>(R.id.min_temp)
+        val currentTemp = findViewById<TextView>(R.id.current_temp)
+        val maximumTemp = findViewById<TextView>(R.id.max_temp)
 
-    private fun observeUI() {
-        viewModel.weatherInfo.observe(this) {
-            when (it) {
-                is Resource.Success<*> -> {
-                    val data: WeeklyWeatherDataResponse? = it.data
-//                    Log.d("DataFrom", it.data.)
-                }
-                is Resource.Error -> {
-                    it.message?.let { message ->
-                        Log.d("DataFrom", message.toString())
-                        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        /**
+         *  current selected place name
+         */
+        val currentPlaceName = findViewById<TextView>(R.id.CurrentPlaceName)
+        currentPlaceName.text = GeneralPrefs(this).getActiveWeatherLocation().name
+
+        val currentPredictionObserver = Observer<WeatherPrediction> { prediction ->
+
+            /**
+             * update UI elements values
+             */
+            if (prediction != null) {
+                weatherDegrees.text = prediction.temp.toString().plus('\u00B0')
+                conditions.text = prediction.weather
+                minimumTemp.text = prediction.temp_min.toString().plus('\u00B0')
+                currentTemp.text = prediction.temp.toString().plus('\u00B0')
+                maximumTemp.text = prediction.temp_max.toString().plus('\u00B0')
+
+                /**
+                 *  change layout background
+                 */
+                val statisticsHeaderConstrainLayout =
+                    findViewById<ConstraintLayout>(R.id.statisticsHeaderConstrainLayout)
+
+                val statisticsBodyConstrainLayout =
+                    findViewById<ConstraintLayout>(R.id.statisticsBodyConstrainLayout)
+
+                when (prediction.weather) {
+                    "Rain" -> {
+                        statisticsHeaderConstrainLayout.setBackgroundResource(R.drawable.sea_rainy)
+                        statisticsBodyConstrainLayout.setBackgroundColor(
+                            ContextCompat.getColor(this, R.color.rainy_body_bg)
+                        )
+                    }
+                    "Clear" -> {
+                        statisticsHeaderConstrainLayout.setBackgroundResource(R.drawable.sea_sunny)
+                        statisticsBodyConstrainLayout.setBackgroundColor(
+                            ContextCompat.getColor(this, R.color.sunny_body_bg)
+                        )
+                    }
+                    "Clouds" -> {
+                        statisticsHeaderConstrainLayout.setBackgroundResource(R.drawable.sea_cloudy)
+                        statisticsBodyConstrainLayout.setBackgroundColor(
+                            ContextCompat.getColor(this, R.color.cloudy_body_bg)
+                        )
                     }
                 }
             }
         }
+        weatherViewModel.currentWeatherPredictions.observe(this, currentPredictionObserver)
+
     }
 
     private fun populateMenuOptions() {
@@ -97,6 +140,9 @@ class WeatherForecastActivity : AppCompatActivity() {
             dialogInterface.dismiss()
             if (options[it] == "Manage Locations") {
                 val intent = Intent(this, FavouriteLocationsActivity::class.java)
+                startActivity(intent)
+            } else if (options[it] == "Favourite Locations Map") {
+                val intent = Intent(this, FavouriteLocationsMapActivity::class.java)
                 startActivity(intent)
             }
         }

@@ -2,13 +2,11 @@ package za.co.dvt.weatherapp.ui.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import za.co.dvt.weatherapp.R
 import za.co.dvt.weatherapp.activities.WeatherForecastActivity
@@ -27,7 +25,7 @@ class FavouriteLocationAdapter(context: Context) :
 
     class FavouriteLocationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val place: TextView = itemView.findViewById(R.id.location)
-        val locationLayout: ConstraintLayout =
+        val locationLayout: RelativeLayout =
             itemView.findViewById(R.id.location_layout)
     }
 

@@ -18,6 +18,9 @@ class WeatherPredictionRepository(private val weatherPredictionDao: WeatherPredi
     fun getWeatherPredictionsByDate(date: String): WeatherPrediction =
         weatherPredictionDao.getWeatherPredictionsByDate(date)
 
+    fun getCurrentWeatherPredictionsByFavouriteLocation(favouriteLocationId: Int): LiveData<WeatherPrediction> =
+        weatherPredictionDao.getCurrentWeatherPredictionsByFavouriteLocation(favouriteLocationId)
+
     fun getWeatherPredictionById(id: Int): WeatherPrediction =
         weatherPredictionDao.getWeatherPredictionById(id)
 

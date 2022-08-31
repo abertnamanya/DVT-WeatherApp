@@ -9,16 +9,19 @@ class FavouriteLocationRepository(private val favouriteLocationDao: FavouriteLoc
     val getFavouriteLocations: LiveData<List<FavouriteLocation>> =
         favouriteLocationDao.getFavouriteLocations()
 
-    suspend fun saveFavouriteLocation(favouriteLocation: FavouriteLocation): Long {
-        return favouriteLocationDao.saveFavouriteLocation(favouriteLocation)
+    suspend fun saveFavouriteLocation(favouriteLocation: FavouriteLocation) {
+        favouriteLocationDao.saveFavouriteLocation(favouriteLocation)
     }
 
-    fun getFavouriteLocationByUuid(uuid: Int) {
+    fun getFavouriteLocationByUuid(uuid: Int): FavouriteLocation =
         favouriteLocationDao.getFavouriteLocationByUuid(uuid)
-    }
 
-    fun updateFavouriteLocationInfo(name: String, uuid: Int) {
-        favouriteLocationDao.updateFavouriteLocationInfo(name, uuid)
+    fun getCurrentUserLocationInfo(): FavouriteLocation =
+        favouriteLocationDao.getCurrentUserLocationInfo()
+
+
+    fun updateFavouriteLocationInfo(name: String, latitude: String, longitude: String) {
+        favouriteLocationDao.updateFavouriteLocationInfo(name, latitude, longitude)
     }
 
 }

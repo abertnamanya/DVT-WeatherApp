@@ -12,6 +12,7 @@ class GeneralPrefs(context: Context) {
     private var activeLocationWeatherPrefEditor: SharedPreferences.Editor
     private val LATITUDE = "latitude"
     private val LONGITUDE = "longitude"
+    private val UUID = "uuid"
     private val PLACE_NAME = "name"
 
 
@@ -44,6 +45,10 @@ class GeneralPrefs(context: Context) {
             LONGITUDE,
             favouriteLocation.longitude
         )
+        activeLocationWeatherPrefEditor.putInt(
+            UUID,
+            favouriteLocation.uuid
+        )
         activeLocationWeatherPrefEditor.putString(
             PLACE_NAME, favouriteLocation.name
         )
@@ -53,10 +58,11 @@ class GeneralPrefs(context: Context) {
 
     fun getActiveWeatherLocation(): FavouriteLocation {
         return FavouriteLocation(
-            0,
-            activeLocationWeatherPref.getString(PLACE_NAME, "").toString(),
-            activeLocationWeatherPref.getString(LATITUDE, "").toString(),
-            activeLocationWeatherPref.getString(LONGITUDE, "").toString(),
+            activeLocationWeatherPref.getInt(UUID, 0),
+            activeLocationWeatherPref.getString(PLACE_NAME, null).toString(),
+            activeLocationWeatherPref.getString(LATITUDE, null).toString(),
+            activeLocationWeatherPref.getString(LONGITUDE, null).toString(),
+            false,
         )
     }
 

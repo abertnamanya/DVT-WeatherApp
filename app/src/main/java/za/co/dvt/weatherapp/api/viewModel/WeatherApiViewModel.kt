@@ -1,12 +1,10 @@
 package za.co.dvt.weatherapp.api.viewModel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import retrofit2.Response
 import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.api.Resource
@@ -67,6 +65,7 @@ class WeatherApiViewModel constructor(
 
                         var favouriteLocationId =
                             selectedLocationPref.getActiveWeatherLocation().uuid
+
                         //delete all previous predictions
                         weatherPredictionRepository.deleteWeatherPrediction(favouriteLocationId)
                         try {

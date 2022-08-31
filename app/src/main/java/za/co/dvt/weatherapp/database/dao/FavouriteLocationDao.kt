@@ -9,7 +9,7 @@ import za.co.dvt.weatherapp.database.entity.FavouriteLocation
 interface FavouriteLocationDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveFavouriteLocation(favouriteLocation: FavouriteLocation):Long
+    suspend fun saveFavouriteLocation(favouriteLocation: FavouriteLocation)
 
     @Query("SELECT * FROM FavouriteLocation ORDER BY uuid DESC")
     fun getFavouriteLocations(): LiveData<List<FavouriteLocation>>
@@ -17,8 +17,12 @@ interface FavouriteLocationDao {
     @Query("SELECT * FROM FavouriteLocation where uuid=:uuid")
     fun getFavouriteLocationByUuid(uuid: Int): FavouriteLocation
 
-    @Query("UPDATE FavouriteLocation SET name=:name WHERE uuid = :uuid")
-    fun updateFavouriteLocationInfo(name: String, uuid: Int)
+    @Query("SELECT * FROM FavouriteLocation where is_current_location='1'")
+    fun getCurrentUserLocationInfo(): FavouriteLocation
+
+
+    @Query("UPDATE FavouriteLocation SET name=:name, latitude=:latitude, longitude=:longitude WHERE is_current_location = '1'")
+    fun updateFavouriteLocationInfo(name: String, latitude: String, longitude: String)
 
     @Delete
     fun deleteFavouriteLocation(favouriteLocation: FavouriteLocation)

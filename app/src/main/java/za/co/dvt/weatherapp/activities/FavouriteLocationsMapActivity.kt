@@ -22,7 +22,6 @@ class FavouriteLocationsMapActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleMap.OnMarkerClickListener {
     var googleMap: GoogleMap? = null
     private lateinit var favouriteLocationViewModel: FavouriteLocationViewModel
-    private lateinit var selectedLocationInfo: SelectedLocationInfo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite_locations_map)
@@ -50,6 +49,10 @@ class FavouriteLocationsMapActivity : AppCompatActivity(), OnMapReadyCallback,
         googleMap?.setOnMarkerClickListener(this)
     }
 
+    /**
+     *  update location map with values already saved in the local database
+     *  as favourite places by the user
+     */
     private fun updateGoogleMap() {
         googleMap?.clear()
         favouriteLocationViewModel.favouriteLocations.observe(this, Observer { location ->
@@ -79,6 +82,11 @@ class FavouriteLocationsMapActivity : AppCompatActivity(), OnMapReadyCallback,
         return false
     }
 
+    /**
+     *  dialog for allowing the use to select the marker to display
+     *  weather statistics of selected favourite location
+     *  on the weatherForecast activity
+     */
     private fun makeLocationActiveOnCurrentWeather(marker: Marker) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Favourite Location Option")
@@ -89,7 +97,8 @@ class FavouriteLocationsMapActivity : AppCompatActivity(), OnMapReadyCallback,
                     marker.snippet!!.toInt(),
                     marker.title!!,
                     marker.position.latitude.toString(),
-                    marker.position.longitude.toString()
+                    marker.position.longitude.toString(),
+                    false
                 )
             )
             val intent = Intent(this, WeatherForecastActivity::class.java)
@@ -101,6 +110,7 @@ class FavouriteLocationsMapActivity : AppCompatActivity(), OnMapReadyCallback,
         }
         builder.show()
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

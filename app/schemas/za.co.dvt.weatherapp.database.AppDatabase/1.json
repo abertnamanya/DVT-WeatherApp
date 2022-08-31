@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0ce1d22ee309d922e29c2c09dc3bed75",
+    "identityHash": "eb1b694ecda42a9060a44dfbca6fe878",
     "entities": [
       {
         "tableName": "FavouriteLocation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `latitude` TEXT NOT NULL, `longitude` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `latitude` TEXT NOT NULL, `longitude` TEXT NOT NULL, `is_current_location` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "uuid",
@@ -31,6 +31,13 @@
             "columnName": "longitude",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "isCurrentLocation",
+            "columnName": "is_current_location",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -114,7 +121,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ce1d22ee309d922e29c2c09dc3bed75')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eb1b694ecda42a9060a44dfbca6fe878')"
     ]
   }
 }

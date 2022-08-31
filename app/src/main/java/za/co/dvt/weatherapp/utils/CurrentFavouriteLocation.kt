@@ -1,25 +1,30 @@
 package za.co.dvt.weatherapp.utils
 
-import android.content.Context
 import za.co.dvt.weatherapp.database.entity.FavouriteLocation
 import za.co.dvt.weatherapp.ui.viewModel.FavouriteLocationViewModel
 
-class CurrentFavouriteLocation(context: Context) {
+class CurrentFavouriteLocation(favouriteLocationViewModel: FavouriteLocationViewModel) {
+    private val favouriteLocationViewModel = favouriteLocationViewModel
+
     fun addLocationToFavourites(
-        favouriteLocationViewModel: FavouriteLocationViewModel,
         placeName: String,
         latitude: String,
-        longitude: String
-    ): Long {
-        return favouriteLocationViewModel.saveFavouriteLocation(
+        longitude: String,
+        isCurrentLocation: Boolean
+    ) {
+        favouriteLocationViewModel.saveFavouriteLocation(
             FavouriteLocation(
                 0,
                 placeName,
                 latitude,
-                longitude
+                longitude,
+                isCurrentLocation
             )
         )
 
     }
+
+    fun getCurrentUserLocationInfo(): FavouriteLocation =
+        favouriteLocationViewModel.getCurrentUserLocationInfo()
 
 }

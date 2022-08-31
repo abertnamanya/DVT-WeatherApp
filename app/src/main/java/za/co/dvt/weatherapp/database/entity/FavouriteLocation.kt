@@ -10,4 +10,5 @@ data class FavouriteLocation(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "latitude") val latitude: String,
     @ColumnInfo(name = "longitude") val longitude: String,
+    @ColumnInfo(name = "is_current_location", defaultValue = "0") val isCurrentLocation: Boolean,
 )

@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -21,7 +20,6 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import za.co.dvt.locationtracker.LocationUtil
 import za.co.dvt.weatherapp.R
-import za.co.dvt.weatherapp.database.entity.FavouriteLocation
 import za.co.dvt.weatherapp.ui.viewModel.FavouriteLocationViewModel
 import za.co.dvt.weatherapp.utils.CurrentFavouriteLocation
 import za.co.dvt.weatherapp.utils.ToastNotification
@@ -120,11 +118,11 @@ class SearchPlacesActivity : AppCompatActivity(), OnMapReadyCallback,
         builder.setMessage("Do you want to save ${selectedLocationInfo.place}")
         builder.setPositiveButton(R.string.OKAY) { dialog, _ ->
             if (selectedLocationInfo.latitude != null && selectedLocationInfo != null && selectedLocationInfo.place != null) {
-                CurrentFavouriteLocation(this).addLocationToFavourites(
-                    favouriteLocationViewModel,
+                CurrentFavouriteLocation(favouriteLocationViewModel).addLocationToFavourites(
                     selectedLocationInfo.place,
                     selectedLocationInfo.latitude,
                     selectedLocationInfo.longitude,
+                    false
                 )
                 ToastNotification(this).showToastNotification("${selectedLocationInfo.place} has been added to the Favourites")
                 val intent = Intent(this, FavouriteLocationsActivity::class.java)

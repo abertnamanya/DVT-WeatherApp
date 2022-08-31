@@ -8,6 +8,7 @@ class LocationSharedPref(context: Context) {
     private var locationSharedPrefEditor: SharedPreferences.Editor? = null
     private var latitude: String = "latitude"
     private var longitude: String = "longitude"
+    private var placeName: String = "place_name"
 
     init {
         locationSharedPref =
@@ -18,6 +19,7 @@ class LocationSharedPref(context: Context) {
     fun storeCurrentLocation(locationData: LocationData) {
         locationSharedPrefEditor?.putString(latitude, locationData.latitude)
         locationSharedPrefEditor?.putString(longitude, locationData.longitude)
+        locationSharedPrefEditor?.putString(placeName, locationData.placeName)
         locationSharedPrefEditor?.apply()
         locationSharedPrefEditor?.commit()
     }
@@ -31,6 +33,7 @@ class LocationSharedPref(context: Context) {
     fun getStoredLocationData(): LocationData {
         val lat = locationSharedPref?.getString(latitude, null).toString()
         val long = locationSharedPref?.getString(longitude, null).toString()
-        return LocationData(lat, long)
+        val placeName = locationSharedPref?.getString(placeName, null).toString()
+        return LocationData(lat, long, placeName)
     }
 }

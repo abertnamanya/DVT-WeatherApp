@@ -43,7 +43,8 @@ class FavouriteLocationAdapter(context: Context) :
             item.uuid,
             item.name,
             item.latitude,
-            item.longitude
+            item.longitude,
+            false
         )
         holder.locationLayout.setOnClickListener {
             selectLocationPref.storeActiveWeatherLocation(

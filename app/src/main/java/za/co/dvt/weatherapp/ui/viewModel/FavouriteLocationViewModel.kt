@@ -13,7 +13,6 @@ import za.co.dvt.weatherapp.database.repository.FavouriteLocationRepository
 class FavouriteLocationViewModel(application: Application) : AndroidViewModel(application) {
     val favouriteLocations: LiveData<List<FavouriteLocation>>
     private val repository: FavouriteLocationRepository
-    var lastInsertId: Long? = null
 
     init {
         val favouriteLocationDao = AppDatabase.getInstance(application)?.FavouriteLocationDao()
@@ -21,15 +20,20 @@ class FavouriteLocationViewModel(application: Application) : AndroidViewModel(ap
         favouriteLocations = repository.getFavouriteLocations
     }
 
-    fun saveFavouriteLocation(favouriteLocation: FavouriteLocation): Long {
+    fun saveFavouriteLocation(favouriteLocation: FavouriteLocation) {
         viewModelScope.launch(Dispatchers.IO) {
-            lastInsertId = repository.saveFavouriteLocation(favouriteLocation)
+            repository.saveFavouriteLocation(favouriteLocation)
         }
-        return lastInsertId!!
     }
 
-    fun getFavouriteLocationByUuid(uuid: Int) {
+    fun getFavouriteLocationByUuid(uuid: Int): FavouriteLocation =
         repository.getFavouriteLocationByUuid(uuid)
-    }
+
+    fun getCurrentUserLocationInfo(): FavouriteLocation =
+        repository.getCurrentUserLocationInfo()
+
+    fun updateCurrentLocation(name: String, latitude: String, longitude: String) =
+        repository.updateFavouriteLocationInfo(name, latitude, longitude)
+
 
 }

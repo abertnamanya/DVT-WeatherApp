@@ -37,16 +37,24 @@ class FavouriteLocationsActivity : AppCompatActivity() {
             findViewById<RecyclerView>(R.id.favourite_places_recycleView)
         placesRecycleView.adapter = adapter
         placesRecycleView.layoutManager = LinearLayoutManager(this)
+
+
         favouriteLocationViewModel.favouriteLocations.observe(this, Observer { location ->
             adapter.setLLiveData(location)
         })
 
+        /**
+         * launch SearchPlacesActivity to add new favourite places
+         */
         binding.addFavouriteLocFab.setOnClickListener {
             val intent = Intent(this, SearchPlacesActivity::class.java)
             startActivity(intent)
         }
     }
 
+    /**
+     * go back to the previous activity
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

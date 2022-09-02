@@ -51,7 +51,7 @@ class SearchPlacesActivity : AppCompatActivity(), OnMapReadyCallback,
         )
 
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, getString(R.string.GOOGLE_API_KEY), Locale.US);
+            Places.initialize(applicationContext, getString(R.string.UPDATED_GOOGLE_API_KEY), Locale.US);
         }
         val autocompleteFragment =
             supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
